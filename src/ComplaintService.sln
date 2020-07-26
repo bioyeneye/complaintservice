@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService", "ComplaintService\ComplaintService.csproj", "{5D97427B-7EFA-400B-AACA-DEA9B5C0BA1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService.DataAccess", "ComplaintService.DataAccess\ComplaintService.DataAccess.csproj", "{D7066386-08BB-455E-A78D-11DB89A11218}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService.BusinessDomain", "ComplaintService.BusinessDomain\ComplaintService.BusinessDomain.csproj", "{4E386B98-DC74-4A09-8A44-693AAF3E560E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5D97427B-7EFA-400B-AACA-DEA9B5C0BA1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D97427B-7EFA-400B-AACA-DEA9B5C0BA1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D97427B-7EFA-400B-AACA-DEA9B5C0BA1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D97427B-7EFA-400B-AACA-DEA9B5C0BA1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D7066386-08BB-455E-A78D-11DB89A11218}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7066386-08BB-455E-A78D-11DB89A11218}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7066386-08BB-455E-A78D-11DB89A11218}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7066386-08BB-455E-A78D-11DB89A11218}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

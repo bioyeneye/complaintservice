@@ -1,0 +1,10 @@
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/bin/Debug/netstandard2.0/ComplaintService.DataAccess.deps.json
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/bin/Debug/netstandard2.0/ComplaintService.DataAccess.dll
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/bin/Debug/netstandard2.0/ComplaintService.DataAccess.pdb
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.csprojAssemblyReference.cache
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.AssemblyInfoInputs.cache
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.AssemblyInfo.cs
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.csproj.CoreCompileInputs.cache
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.dll
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/ComplaintService.DataAccess.pdb
+/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.DataAccess/obj/Debug/netstandard2.0/EFCorePluralizer.cs
