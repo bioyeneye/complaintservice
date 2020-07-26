@@ -1,0 +1,15 @@
+src/ComplaintService/bin/
+src/ComplaintService/obj/
+obj/
+/packages/
+riderModule.iml
+/_ReSharper.Caches/
+
+src/ComplaintService.DataAccess/bin/
+src/ComplaintService.DataAccess/obj/
+
+src/ComplaintService.BusinessDomain/bin/
+src/ComplaintService.BusinessDomain/obj/
+
+
+src/.idea/
