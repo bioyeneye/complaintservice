@@ -1,9 +1,0 @@
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/bin/Debug/netstandard2.0/ComplaintService.BusinessDomain.deps.json
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/bin/Debug/netstandard2.0/ComplaintService.BusinessDomain.dll
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/bin/Debug/netstandard2.0/ComplaintService.BusinessDomain.pdb
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.csprojAssemblyReference.cache
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.AssemblyInfoInputs.cache
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.AssemblyInfo.cs
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.csproj.CoreCompileInputs.cache
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.dll
-/Users/oyeneyebolaji/RiderProjects/banklyservices/src/ComplaintService/ComplaintService.BusinessDomain/obj/Debug/netstandard2.0/ComplaintService.BusinessDomain.pdb
