@@ -14,22 +14,28 @@ variables:
   buildPlatform: 'Any CPU'
   buildConfiguration: 'Release'
   solutionPath: 'src/ComplaintService.sln'
+  testPath: 'src/ComplaintService.Test/ComplaintService.Test.csproj'
+
 
 steps:
 - task: NuGetToolInstaller@1
 
 - task: NuGetCommand@2
+  displayName: 'dotnet restore'
   inputs:
     restoreSolution: '$(solutionPath)'
 
 - task: VSBuild@1
+  displayName: 'dotnet build $(buildConfiguration)'
   inputs:
     solution: '$(solutionPath)'
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
 
-- task: VSTest@2
+- task: DotNetCoreCLI@2
+  displayName: 'test Project'
   inputs:
-    platform: '$(buildPlatform)'
-    configuration: '$(buildConfiguration)'
+    command: test
+    projects: '$(testPath)'
+    arguments: '--configuration $(buildConfiguration)'
