@@ -76,7 +76,7 @@ namespace ComplaintService.BusinessDomain.Services
                 _mapper.Map(model, complaint);
                 _unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _unitOfWork.Rollback();
                 throw; //new Exception(ex.Message);
@@ -167,7 +167,7 @@ namespace ComplaintService.BusinessDomain.Services
                 _mapper.Map(model, complaint);
                 _unitOfWork.Commit();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 _unitOfWork.Rollback();
                 throw; //new Exception(ex.Message);

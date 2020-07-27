@@ -10,7 +10,6 @@ namespace ComplaintService.DataAccess.RepositoryPattern
     {
         #region Private Fields
         private readonly Guid _instanceId;
-        bool _disposed;
         #endregion Private Fields
 
         public EntityFrameworkDataContext(DbContextOptions<TContext> options)
