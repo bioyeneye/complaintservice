@@ -34,6 +34,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: DotNetCoreCLI@2
+  displayName: 'test Project'
   inputs:
     command: test
     projects: '$(testPath)'
