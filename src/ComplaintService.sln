@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService.DataAccess
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService.BusinessDomain", "ComplaintService.BusinessDomain\ComplaintService.BusinessDomain.csproj", "{4E386B98-DC74-4A09-8A44-693AAF3E560E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComplaintService.Test", "ComplaintService.Test\ComplaintService.Test.csproj", "{369858B4-5B70-4BF2-AC5D-ABDADBCDCC4D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4E386B98-DC74-4A09-8A44-693AAF3E560E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{369858B4-5B70-4BF2-AC5D-ABDADBCDCC4D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369858B4-5B70-4BF2-AC5D-ABDADBCDCC4D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369858B4-5B70-4BF2-AC5D-ABDADBCDCC4D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369858B4-5B70-4BF2-AC5D-ABDADBCDCC4D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
