@@ -20,8 +20,9 @@ namespace ComplaintService.Controllers
         {
             _service = service;
         }
-        
+
         [Route("Count")]
+        [HttpGet]
         public IActionResult GetCount(int page, int size, string whereCondition = null, string orderByExpression = null)
         {
             try
@@ -36,7 +37,7 @@ namespace ComplaintService.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpPut]
         public IActionResult Update(ComplaintModel model)
         {
@@ -47,15 +48,15 @@ namespace ComplaintService.Controllers
                     _service.UpdateComplaint(model, GetCurrentUserId());
                     return Ok(_service.GetById(model.Id));
                 }
-                return BadRequest(ModelState);
 
+                return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [HttpDelete]
         public IActionResult Delete(ComplaintModel model)
         {
@@ -66,16 +67,17 @@ namespace ComplaintService.Controllers
                     _service.Delete(model.Id);
                     return Ok();
                 }
-                return BadRequest(ModelState);
 
+                return BadRequest(ModelState);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [Route("GetDetails/{id}")]
+        [HttpGet]
         public IActionResult GetDetail(string id)
         {
             try
@@ -102,6 +104,7 @@ namespace ComplaintService.Controllers
                     _service.Create(model, GetCurrentUserId());
                     return Ok(model);
                 }
+
                 return BadRequest(ModelState);
             }
             catch (Exception ex)
@@ -109,7 +112,7 @@ namespace ComplaintService.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        
+
         [NonAction]
         public string GetCurrentUserId()
         {
@@ -117,3 +120,12 @@ namespace ComplaintService.Controllers
         }
     }
 }
+
+/*
+ * {
+  "category": 1,
+  "summary": "Error transfer",
+  "description": "I entered money and failed",
+  "type": 0
+}
+ */

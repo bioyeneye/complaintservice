@@ -1,7 +1,7 @@
-﻿﻿using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace CoreLibrary.DataContext
+namespace ComplaintService.DataAccess.RepositoryPattern.Interfaces
 {
     public interface IDataContextAsync : IDataContext
     {

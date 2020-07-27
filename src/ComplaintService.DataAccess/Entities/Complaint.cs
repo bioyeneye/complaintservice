@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace ComplaintService.DataAccess.Entities
 {
-    public partial class Complaint
+    public class Complaint
     {
         public Complaint()
         {

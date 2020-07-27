@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace ComplaintService.DataAccess.Entities
 {
-    public partial class Comment
+    public class Comment
     {
         public string Id { get; set; }
         public string Message { get; set; }

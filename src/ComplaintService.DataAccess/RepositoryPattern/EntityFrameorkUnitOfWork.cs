@@ -1,15 +1,14 @@
-﻿﻿#region
+﻿#region
 
- using System;
- using System.Data;
- using System.Data.Common;
- using System.Threading;
- using System.Threading.Tasks;
- using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
- using CoreLibrary.DataContext;
- using Microsoft.EntityFrameworkCore;
+using System;
+using System.Data;
+using System.Data.Common;
+using System.Threading;
+using System.Threading.Tasks;
+using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
- #endregion
+#endregion
 
 namespace ComplaintService.DataAccess.RepositoryPattern
 {
@@ -27,7 +26,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 
         public EntityFrameorkUnitOfWork(IDataContextAsync dataContext, IServiceProvider serviceProvider)
         {
-            _context = (DbContext)dataContext;
+            _context = (DbContext) dataContext;
             ServiceProvider = serviceProvider;
         }
 
@@ -61,29 +60,25 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         {
             CheckDisposed();
             var repositoryType = typeof(IRepositoryAsync<TEntity>);
-            var repository = (IRepositoryAsync<TEntity>)ServiceProvider.GetService(repositoryType);
+            var repository = (IRepositoryAsync<TEntity>) ServiceProvider.GetService(repositoryType);
             if (repository == null)
-            {
                 throw new RepositoryNotFoundException(repositoryType.Name,
                     $"Repository {repositoryType.Name} not found in the IOC container. Check if it is registered during startup.");
-            }
 
             ((IRepositoryInjection) repository)?.SetContext(_context);
             return repository;
         }
 
-        public IRepository<TEntity> GetRepository<TEntity> () where TEntity : class
+        public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             CheckDisposed();
             var repositoryType = typeof(IRepository<TEntity>);
-            var repository = (IRepository<TEntity>)ServiceProvider.GetService(repositoryType);
+            var repository = (IRepository<TEntity>) ServiceProvider.GetService(repositoryType);
             if (repository == null)
-            {
                 throw new RepositoryNotFoundException(repositoryType.Name,
                     $"Repository {repositoryType.Name} not found in the IOC container. Check if it is registered during startup.");
-            }
 
-            ((IRepositoryInjection) repository).SetContext(_context);
+            (repository as IRepositoryInjection)?.SetContext(_context);
             return repository;
         }
 
@@ -97,9 +92,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         public virtual void Dispose(bool disposing)
         {
             if (!_isDisposed)
-            {
                 if (disposing)
-                {
                     if (_context != null)
                     {
                         if (_context.Database.GetDbConnection().State == ConnectionState.Open)
@@ -114,8 +107,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
                             _context = null;
                         }
                     }
-                }
-            }
+
             _isDisposed = true;
         }
 
@@ -130,19 +122,14 @@ namespace ComplaintService.DataAccess.RepositoryPattern
             Dispose(false);
         }
 
-
         #endregion Constuctor/Dispose
-
 
 
         #region Unit of Work Transactions
 
         public void BeginTransaction(IsolationLevel isolationLevel = IsolationLevel.Unspecified)
         {
-            if (_context.Database.GetDbConnection().State != ConnectionState.Open)
-            {
-                _context.Database.GetDbConnection().Open();
-            }
+            if (_context.Database.GetDbConnection().State != ConnectionState.Open) _context.Database.GetDbConnection().Open();
             //_context.Database.BeginTransaction();
             _transaction = _context.Database.GetDbConnection().BeginTransaction(isolationLevel);
         }
@@ -157,7 +144,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         public void Commit()
         {
             // _context.Database.CommitTransaction(); 
-            _transaction.Commit(); 
+            _transaction.Commit();
         }
 
         public void Rollback()
@@ -168,7 +155,6 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 
         public void DisposeTransaction()
         {
-
         }
 
         #endregion

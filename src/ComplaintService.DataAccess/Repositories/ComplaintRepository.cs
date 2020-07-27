@@ -6,7 +6,6 @@ using ComplaintService.DataAccess.Entities;
 using ComplaintService.DataAccess.RepositoryPattern;
 using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
 using ComplaintService.DataAccess.ViewModels;
-using CoreLibrary.DataContext;
 
 namespace ComplaintService.DataAccess.Repositories
 {
@@ -14,8 +13,10 @@ namespace ComplaintService.DataAccess.Repositories
     {
         IEnumerable<Complaint> GetComplaintPaged(int page, int count, out int totalCount,
             ComplaintFilter filter = null, OrderExpression orderExpression = null);
+
         IEnumerable<Complaint> GetComplaintPaged(int page, int count, ComplaintFilter filter = null,
             OrderExpression orderExpression = null);
+
         IEnumerable<Complaint> GetComplaintFilteredQueryable(ComplaintFilter filter = null);
     }
 
@@ -33,10 +34,17 @@ namespace ComplaintService.DataAccess.Repositories
             totalCount = Count(expression);
             return ComplaintPaged(page, count, expression, orderExpression);
         }
+
         public IEnumerable<Complaint> GetComplaintPaged(int page, int count, ComplaintFilter filter = null, OrderExpression orderExpression = null)
         {
             var expression = new ComplaintQueryObject(filter).Expression;
             return ComplaintPaged(page, count, expression, orderExpression);
+        }
+
+        public IEnumerable<Complaint> GetComplaintFilteredQueryable(ComplaintFilter filter = null)
+        {
+            var expression = new ComplaintQueryObject(filter).Expression;
+            return Fetch(expression);
         }
 
         private IEnumerable<Complaint> ComplaintPaged(int page, int count, Expression<Func<Complaint, bool>> expression,
@@ -46,26 +54,17 @@ namespace ComplaintService.DataAccess.Repositories
             return Fetch(expression, order, page, count);
         }
 
-        public IEnumerable<Complaint> GetComplaintFilteredQueryable(ComplaintFilter filter = null)
-        {
-            var expression = new ComplaintQueryObject(filter).Expression;
-            return Fetch(expression);
-        }
-
-        
 
         public static Func<IQueryable<Complaint>, IOrderedQueryable<Complaint>> ProcessOrderFunc(OrderExpression orderDeserilizer = null)
         {
-            Func<IQueryable<Complaint>, IOrderedQueryable<Complaint>> orderFuction = (queryable) =>
+            Func<IQueryable<Complaint>, IOrderedQueryable<Complaint>> orderFuction = queryable =>
             {
                 var orderQueryable = queryable.OrderByDescending(x => x.DateCreated);
                 if (orderDeserilizer != null)
-                {
                     switch (orderDeserilizer.Column)
                     {
-
                     }
-                }
+
                 return orderQueryable;
             };
             return orderFuction;
@@ -77,7 +76,6 @@ namespace ComplaintService.DataAccess.Repositories
             {
                 if (filter != null)
                 {
-
                 }
             }
         }

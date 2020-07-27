@@ -1,13 +1,11 @@
 using ComplaintService.DataAccess.Entities;
 using ComplaintService.DataAccess.RepositoryPattern;
 using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
-using CoreLibrary.DataContext;
 
 namespace ComplaintService.DataAccess.Repositories
 {
     public interface ICommentRepository : IRepositoryAsync<Comment>
     {
-        
     }
 
 

@@ -10,10 +10,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         public static OrderExpression Deserializer(string whereCondition)
         {
             OrderExpression orderDeserializer = null;
-            if (string.IsNullOrEmpty(whereCondition))
-            {
-                orderDeserializer = JsonConvert.DeserializeObject<OrderExpression>(whereCondition);
-            }
+            if (string.IsNullOrEmpty(whereCondition)) orderDeserializer = JsonConvert.DeserializeObject<OrderExpression>(whereCondition);
 
             return orderDeserializer ?? new OrderExpression();
         }

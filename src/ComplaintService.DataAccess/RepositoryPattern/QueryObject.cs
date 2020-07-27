@@ -15,7 +15,6 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         {
             _query = _query == null ? query : _query.And(query.Expand());
             return this;
-
         }
 
         public IQueryObject<TEntity> And(IQueryObject<TEntity> queryObject)

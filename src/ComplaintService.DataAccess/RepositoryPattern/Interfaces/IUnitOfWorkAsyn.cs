@@ -5,7 +5,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern.Interfaces
 {
     public interface IUnitOfWorkAsync : IUnitOfWork
     {
-        new Task<int> Commit();  
+        new Task<int> Commit();
         Task<int> CommitAsync();
         Task<int> SaveChangesAsync();
         Task<int> SaveChangesAsync(CancellationToken cancellationToken);

@@ -1,6 +1,6 @@
-﻿﻿using System;
+﻿using System;
 
-namespace CoreLibrary.DataContext
+namespace ComplaintService.DataAccess.RepositoryPattern.Interfaces
 {
     public interface IDataContext : IDisposable
     {

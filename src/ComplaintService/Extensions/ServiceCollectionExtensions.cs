@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Reflection;
 using System.Threading.Tasks;
 using ComplaintService.BusinessDomain.ApplicationModels;
@@ -7,12 +8,12 @@ using ComplaintService.DataAccess.Contexts;
 using ComplaintService.DataAccess.Repositories;
 using ComplaintService.DataAccess.RepositoryPattern;
 using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
-using CoreLibrary.DataContext;
+using ComplaintService.Filters;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 
 namespace ComplaintService.Extensions
 {
@@ -77,15 +78,53 @@ namespace ComplaintService.Extensions
             });
             return services;
         }
-        
-        public static IServiceCollection AddRepositoryPattern<TApplicationContext>(this IServiceCollection services)
-            where TApplicationContext : EntityFrameworkDataContext<TApplicationContext>
+
+        public static IServiceCollection AddRepositoryPattern(this IServiceCollection services)
         {
-            services.AddTransient<IDataContextAsync, TApplicationContext>();
+            services.AddTransient<IDataContextAsync, ComplaintDbContext>();
             services.AddTransient<IUnitOfWorkAsync, EntityFrameorkUnitOfWork>();
             services.AddTransient<IUnitOfWork, EntityFrameorkUnitOfWork>();
             services.AddTransient(typeof(IRepositoryAsync<>), typeof(Repository<>));
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            return services;
+        }
+
+        public static IServiceCollection AddSwaggerDoc(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo {Title = "Complaint Service", Version = "v1"});
+                c.SchemaFilter<EnumSchemaFilter>();
+                c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+                {
+                    Description = @"JWT Authorization header using the Bearer scheme. \r\n\r\n 
+                      Enter 'Bearer' [space] and then your token in the text input below.
+                      \r\n\r\nExample: 'Bearer 12345abcdef'",
+                    Name = "Authorization",
+                    In = ParameterLocation.Header,
+                    Type = SecuritySchemeType.ApiKey,
+                    Scheme = "Bearer"
+                });
+
+                c.AddSecurityRequirement(new OpenApiSecurityRequirement
+                {
+                    {
+                        new OpenApiSecurityScheme
+                        {
+                            Reference = new OpenApiReference
+                            {
+                                Type = ReferenceType.SecurityScheme,
+                                Id = "Bearer"
+                            },
+                            Scheme = "oauth2",
+                            Name = "Bearer",
+                            In = ParameterLocation.Header
+                        },
+                        new List<string>()
+                    }
+                });
+            });
+            services.AddSwaggerGenNewtonsoftSupport();
             return services;
         }
     }

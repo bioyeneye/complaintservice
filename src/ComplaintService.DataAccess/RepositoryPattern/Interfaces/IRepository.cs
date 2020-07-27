@@ -7,9 +7,9 @@ namespace ComplaintService.DataAccess.RepositoryPattern.Interfaces
 {
     public interface IRepository<T> where T : class
     {
+        IQueryable<T> Table { get; }
         T Get(string id);
         IEnumerable<T> GetAll();
-        IQueryable<T> Table { get; }
 
         T Find(Expression<Func<T, bool>> predicate);
 

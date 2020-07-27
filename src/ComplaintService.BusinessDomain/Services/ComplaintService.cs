@@ -25,12 +25,12 @@ namespace ComplaintService.BusinessDomain.Services
         void ToggleActive(string id, string username);
         bool ComplaintExists(ComplaintModel model);
     }
-    
+
     public class ComplaintService : IComplaintService
     {
         private readonly IComplaintRepository _repository;
         private readonly IUnitOfWorkAsync _unitOfWork;
-        private IMapper _mapper;
+        private readonly IMapper _mapper;
 
         public ComplaintService(IComplaintRepository repository, IUnitOfWorkAsync unitOfWork, IMapper mapper)
         {
@@ -47,17 +47,17 @@ namespace ComplaintService.BusinessDomain.Services
                 var complaint = new Complaint
                 {
                     Id = Guid.NewGuid().ToString(),
-                    Category = (int)model.Category,
+                    Category = (int) model.Category,
                     Description = model.Description,
                     Summary = model.Summary,
                     DateCreated = DateTime.UtcNow,
-                    Status = (int)ComplaintStatus.Created,
-                    Type = (int)model.Type,
+                    Status = (int) ComplaintStatus.Created,
+                    Type = (int) model.Type
                 };
                 _repository.Insert(complaint);
                 _unitOfWork.Commit();
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 _unitOfWork.Rollback();
                 throw e;
@@ -83,18 +83,13 @@ namespace ComplaintService.BusinessDomain.Services
             }
         }
 
-        public Complaint GetComplaintEntity(string id)
-        {
-            return _repository.Find(c => c.Id == id);
-        }
-
         public async void Delete(string id)
         {
             try
             {
                 _unitOfWork.BeginTransaction();
                 var entity = GetComplaintEntity(id);
-                if(entity == null) throw new Exception($"Complaint not found");
+                if (entity == null) throw new Exception("Complaint not found");
                 await _repository.DeleteAsync(entity);
                 await _unitOfWork.Commit();
             }
@@ -118,17 +113,6 @@ namespace ComplaintService.BusinessDomain.Services
             var entity = GetComplaintEntity(id);
             var item = _mapper.Map<Complaint, ComplaintItem>(entity);
             return item;
-        }
-        
-        private IEnumerable<ComplaintItem> ProcessQuery(
-            IEnumerable<Complaint> entities)
-        {
-            return entities.Select(c =>
-            {
-                var item =
-                    _mapper.Map<Complaint, ComplaintItem>(c);
-                return item;
-            });
         }
 
         public IEnumerable<ComplaintModel> Query(int page, int count, ComplaintFilter filter, string orderByExpression = null)
@@ -176,12 +160,28 @@ namespace ComplaintService.BusinessDomain.Services
 
         public void ToggleActive(string id, string username)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public bool ComplaintExists(ComplaintModel model)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
+        }
+
+        public Complaint GetComplaintEntity(string id)
+        {
+            return _repository.Find(c => c.Id == id);
+        }
+
+        private IEnumerable<ComplaintItem> ProcessQuery(
+            IEnumerable<Complaint> entities)
+        {
+            return entities.Select(c =>
+            {
+                var item =
+                    _mapper.Map<Complaint, ComplaintItem>(c);
+                return item;
+            });
         }
     }
 }

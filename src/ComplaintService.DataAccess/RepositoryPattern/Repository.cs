@@ -5,7 +5,6 @@ using System.Linq.Expressions;
 using System.Threading;
 using System.Threading.Tasks;
 using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
-using CoreLibrary.DataContext;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,20 +12,17 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 {
     public class Repository<T> : IRepositoryAsync<T> where T : class
     {
-        protected readonly IDataContextAsync Context;
         private readonly IUnitOfWork _unitOfWork;
+        protected readonly IDataContextAsync Context;
         protected readonly DbSet<T> DbSet;
 
 
-        public Repository(IDataContextAsync context,IUnitOfWork unitOfWork)
+        public Repository(IDataContextAsync context, IUnitOfWork unitOfWork)
         {
             Context = context;
             _unitOfWork = unitOfWork;
 
-            if (context is DbContext dbContext)
-            {
-                DbSet = dbContext.Set<T>();
-            }
+            if (context is DbContext dbContext) DbSet = dbContext.Set<T>();
         }
 
         public T Get(string id)
@@ -39,7 +35,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
             return Table;
         }
 
-        public IQueryable<T> Table => Queryable(); 
+        public IQueryable<T> Table => Queryable();
 
         public T Find(Expression<Func<T, bool>> predicate)
         {
@@ -48,17 +44,14 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 
         public void Insert(T entity, bool saveNow = true)
         {
-            ((DbContext)Context).Entry(entity).State = EntityState.Added;
+            ((DbContext) Context).Entry(entity).State = EntityState.Added;
             if (saveNow)
                 Context.SaveChanges();
         }
 
         public void InsertRange(IEnumerable<T> entities, bool saveNow = true)
         {
-            foreach (var entity in entities)
-            {
-                Insert(entity);
-            }
+            foreach (var entity in entities) Insert(entity);
             if (saveNow)
                 Context.SaveChanges();
         }
@@ -88,12 +81,8 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 
         public void Update(T entity, bool isSaveNow = true)
         {
-           
-            ((DbContext)Context).Entry(entity).State = EntityState.Modified;
-            if (isSaveNow)
-            {
-                Context.SaveChanges();
-            }
+            ((DbContext) Context).Entry(entity).State = EntityState.Modified;
+            if (isSaveNow) Context.SaveChanges();
         }
 
         public void Remove(object id, bool saveNow)
@@ -106,7 +95,7 @@ namespace ComplaintService.DataAccess.RepositoryPattern
 
         public virtual void Remove(T entity, bool saveNow = true)
         {
-            ((DbContext)Context).Entry(entity).State = EntityState.Deleted;
+            ((DbContext) Context).Entry(entity).State = EntityState.Deleted;
             if (saveNow)
                 Context.SaveChanges();
         }
@@ -116,17 +105,6 @@ namespace ComplaintService.DataAccess.RepositoryPattern
             DbSet.RemoveRange(entities);
             if (save)
                 SaveChanges();
-        }
-        
-        public virtual IQueryable<T> Queryable()
-        {
-            return DbSet;
-        }
-
-        //Asynchronous Tasks
-        public virtual async Task<IEnumerable<T>> GetAllAsync()
-        {
-            return await DbSet.ToListAsync();
         }
 
 
@@ -145,35 +123,15 @@ namespace ComplaintService.DataAccess.RepositoryPattern
             return DeleteAsync(CancellationToken.None, keyValues);
         }
 
-        public virtual async Task<T> GetAsync(params object[] keyValues)
-        {
-            return await DbSet.FindAsync(keyValues);
-        }
-
-        public virtual async Task<T> GetAsync(CancellationToken cancellationToken, params object[] keyValues)
-        {
-            return await DbSet.FindAsync(cancellationToken, keyValues);
-        }
-
         public virtual async Task<bool> DeleteAsync(CancellationToken cancellationToken, params object[] keyValues)
         {
             var entity = await GetAsync(cancellationToken, keyValues);
 
             if (entity == null)
                 return false;
-            ((DbContext)Context).Entry(entity).State = EntityState.Deleted;
+            ((DbContext) Context).Entry(entity).State = EntityState.Deleted;
 
             return true;
-        }
-
-        public virtual void SaveChangesAsny()
-        {
-            Context.SaveChangesAsync();
-        }
-
-        public virtual void SaveChanges()
-        {
-            Context.SaveChanges();
         }
 
         public virtual Task<int> SaveChangesAsync()
@@ -189,6 +147,37 @@ namespace ComplaintService.DataAccess.RepositoryPattern
         public virtual IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
         {
             return _unitOfWork.GetRepository<TEntity>();
+        }
+
+        public virtual IQueryable<T> Queryable()
+        {
+            return DbSet;
+        }
+
+        //Asynchronous Tasks
+        public virtual async Task<IEnumerable<T>> GetAllAsync()
+        {
+            return await DbSet.ToListAsync();
+        }
+
+        public virtual async Task<T> GetAsync(params object[] keyValues)
+        {
+            return await DbSet.FindAsync(keyValues);
+        }
+
+        public virtual async Task<T> GetAsync(CancellationToken cancellationToken, params object[] keyValues)
+        {
+            return await DbSet.FindAsync(cancellationToken, keyValues);
+        }
+
+        public virtual void SaveChangesAsny()
+        {
+            Context.SaveChangesAsync();
+        }
+
+        public virtual void SaveChanges()
+        {
+            Context.SaveChanges();
         }
     }
 }

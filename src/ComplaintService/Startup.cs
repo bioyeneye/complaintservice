@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
-using ComplaintService.DataAccess.Contexts;
 using ComplaintService.Extensions;
 using ComplaintService.Filters;
 using Microsoft.AspNetCore.Builder;
@@ -31,11 +30,13 @@ namespace ComplaintService
             services.AddControllers(options => { options.Filters.Add(typeof(ValidateModelStateActionFilter)); });
 
             services.AddCors();
+            services.AddHttpContextAccessor();
             services.AddAutoMapper(typeof(AutoMapping));
             services.AddMicroserviceDbContext(Configuration);
+            services.AddRepositoryPattern();
             services.AddMicroserviceServicesAndOptions(Configuration);
             services.AddMicroserviceAuthentication(Configuration);
-            services.AddRepositoryPattern<ComplaintDbContext>();
+            services.AddSwaggerDoc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +50,10 @@ namespace ComplaintService
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseAuthorization();
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
+
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseWelcomePage();
