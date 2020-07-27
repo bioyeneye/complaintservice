@@ -32,6 +32,7 @@ steps:
     configuration: '$(buildConfiguration)'
 
 - task: VSTest@2
+  displayName: 'test'
   inputs:
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
