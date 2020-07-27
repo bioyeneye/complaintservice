@@ -10,11 +10,8 @@ namespace ComplaintService.Extensions
     {
         public static IApplicationBuilder UseConfigureSecurityHeaders(this IApplicationBuilder app, IWebHostEnvironment env)
         {
-            if (!env.IsDevelopment())
-            {
-                app.UseHsts(options => options.MaxAge(days: 365).IncludeSubdomains());
-            }
-            
+            if (!env.IsDevelopment()) app.UseHsts(options => options.MaxAge(365).IncludeSubdomains());
+
             app.Use(async (context, next) =>
             {
                 context.Response.Headers.Add("X-Frame-Options", "DENY");
@@ -36,16 +33,13 @@ namespace ComplaintService.Extensions
             app.UseReferrerPolicy(options => options.NoReferrer());
             app.UseXXssProtection(options => options.EnabledWithBlockMode());
             app.UseXfo(options => options.Deny());
-            
+
             app.Use((context, next) =>
             {
-                if (context.Request.IsHttps)
-                {
-                    context.Response.Headers.Append("Expect-CT", $"max-age=0; report-uri=\"https://tranicars.com/report-ct\"");
-                }
+                if (context.Request.IsHttps) context.Response.Headers.Append("Expect-CT", "max-age=0; report-uri=\"https://tranicars.com/report-ct\"");
                 return next.Invoke();
             });
-            
+
             var forwardOptions = new ForwardedHeadersOptions
             {
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto,

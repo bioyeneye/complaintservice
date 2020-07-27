@@ -6,6 +6,6 @@ namespace ComplaintService.DataAccess.Entities.enums
         BankTransfer,
         InternationalTransfer,
         Airtime,
-        BillPayment,
+        BillPayment
     }
 }

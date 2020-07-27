@@ -1,0 +1,20 @@
+using ComplaintService.DataAccess.Entities;
+using ComplaintService.DataAccess.RepositoryPattern;
+using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
+using CoreLibrary.DataContext;
+
+namespace ComplaintService.DataAccess.Repositories
+{
+    public interface ICommentRepository : IRepositoryAsync<Comment>
+    {
+        
+    }
+
+
+    public class CommentRepository : Repository<Comment>, ICommentRepository
+    {
+        public CommentRepository(IDataContextAsync context, IUnitOfWork unitOfWork) : base(context, unitOfWork)
+        {
+        }
+    }
+}

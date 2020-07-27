@@ -1,9 +1,13 @@
 using System;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 using ComplaintService.BusinessDomain.ApplicationModels;
+using ComplaintService.BusinessDomain.Services;
 using ComplaintService.DataAccess.Contexts;
+using ComplaintService.DataAccess.Repositories;
+using ComplaintService.DataAccess.RepositoryPattern;
+using ComplaintService.DataAccess.RepositoryPattern.Interfaces;
+using CoreLibrary.DataContext;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -17,9 +21,9 @@ namespace ComplaintService.Extensions
         public static IServiceCollection AddMicroserviceDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             var connectionString = configuration.GetConnectionString(nameof(ComplaintDbContext));
-            var migrationsAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            var migrationsAssembly = typeof(ComplaintDbContext).GetTypeInfo().Assembly.GetName().Name;
 
-            services.AddDbContext<ComplaintDbContext>(builder => builder.UseSqlite(connectionString, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
+            services.AddDbContext<ComplaintDbContext>(builder => builder.UseSqlServer(connectionString, sqlOptions => sqlOptions.MigrationsAssembly(migrationsAssembly)));
             return services;
         }
 
@@ -28,6 +32,8 @@ namespace ComplaintService.Extensions
             var microserviceSetting = configuration.GetSection(nameof(MicroserviceSetting)).Get<MicroserviceSetting>();
             services.AddSingleton(microserviceSetting);
 
+            services.AddTransient<IComplaintRepository, ComplaintRepository>();
+            services.AddTransient<IComplaintService, BusinessDomain.Services.ComplaintService>();
             return services;
         }
 
@@ -44,14 +50,16 @@ namespace ComplaintService.Extensions
             {
                 cfg.RequireHttpsMetadata = false;
                 cfg.SaveToken = true;
+                cfg.Audience = microserviceSetting.ApiName;
+                cfg.Authority = microserviceSetting.Authority;
 
-                cfg.TokenValidationParameters = new TokenValidationParameters
-                { 
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidIssuer = microserviceSetting.Authority,
-                    ValidAudience = microserviceSetting.ApiName,
-                };
+                // cfg.TokenValidationParameters = new TokenValidationParameters
+                // {
+                //     ValidateIssuer = true,
+                //     ValidateAudience = true,
+                //     ValidIssuer = microserviceSetting.Authority,
+                //     ValidAudience = microserviceSetting.ApiName
+                // };
 
                 cfg.Events = new JwtBearerEvents
                 {
@@ -69,11 +77,16 @@ namespace ComplaintService.Extensions
             });
             return services;
         }
+        
+        public static IServiceCollection AddRepositoryPattern<TApplicationContext>(this IServiceCollection services)
+            where TApplicationContext : EntityFrameworkDataContext<TApplicationContext>
+        {
+            services.AddTransient<IDataContextAsync, TApplicationContext>();
+            services.AddTransient<IUnitOfWorkAsync, EntityFrameorkUnitOfWork>();
+            services.AddTransient<IUnitOfWork, EntityFrameorkUnitOfWork>();
+            services.AddTransient(typeof(IRepositoryAsync<>), typeof(Repository<>));
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            return services;
+        }
     }
 }
-
-/*
- *
- * The data is NULL at ordinal 1. This method can't be called on NULL values. Check using IsDBNull before calling.
-
- */

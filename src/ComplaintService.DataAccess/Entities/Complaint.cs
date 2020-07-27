@@ -11,12 +11,13 @@ namespace ComplaintService.DataAccess.Entities
         }
 
         public string Id { get; set; }
-        public long Category { get; set; }
+        public string ComplainBy { get; set; }
+        public int Category { get; set; }
         public string Summary { get; set; }
         public string Description { get; set; }
-        public long Type { get; set; }
-        public byte[] DateCreated { get; set; }
-        public long Status { get; set; }
+        public int Type { get; set; }
+        public DateTime DateCreated { get; set; }
+        public int Status { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
     }
