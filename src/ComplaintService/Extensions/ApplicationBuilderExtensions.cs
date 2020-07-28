@@ -29,10 +29,10 @@ namespace ComplaintService.Extensions
                 options.StyleSources(directive => directive.Self().UnsafeInline());
             });*/
 
-            app.UseXContentTypeOptions();
-            app.UseReferrerPolicy(options => options.NoReferrer());
-            app.UseXXssProtection(options => options.EnabledWithBlockMode());
-            app.UseXfo(options => options.Deny());
+            // app.UseXContentTypeOptions();
+            // app.UseReferrerPolicy(options => options.NoReferrer());
+            // app.UseXXssProtection(options => options.EnabledWithBlockMode());
+            // app.UseXfo(options => options.Deny());
 
             app.Use((context, next) =>
             {

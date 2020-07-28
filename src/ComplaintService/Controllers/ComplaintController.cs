@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using ComplaintService.BusinessDomain.Services;
@@ -92,8 +93,8 @@ namespace ComplaintService.Controllers
         }
 
 
-        [Authorize(Roles = "User")]
         [HttpPost]
+        //[Authorize(Roles = "User")]
         public async Task<IActionResult> Post(ComplaintModel model)
         {
             try
@@ -101,8 +102,8 @@ namespace ComplaintService.Controllers
                 if (ModelState.IsValid)
                 {
                     model.ComplainBy = GetCurrentUserId();
-                    _service.Create(model, GetCurrentUserId());
-                    return Ok(model);
+                    _service.Create(model, model.ComplainBy);
+                    return Ok();
                 }
 
                 return BadRequest(ModelState);
@@ -116,16 +117,9 @@ namespace ComplaintService.Controllers
         [NonAction]
         public string GetCurrentUserId()
         {
-            return User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            var claimsIdentity = User.Identity as ClaimsIdentity;
+            var user = claimsIdentity?.FindFirst("sub");
+            return User.FindFirst("sub")?.Value;
         }
     }
 }
-
-/*
- * {
-  "category": 1,
-  "summary": "Error transfer",
-  "description": "I entered money and failed",
-  "type": 0
-}
- */

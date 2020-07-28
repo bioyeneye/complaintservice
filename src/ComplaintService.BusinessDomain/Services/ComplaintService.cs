@@ -52,7 +52,8 @@ namespace ComplaintService.BusinessDomain.Services
                     Summary = model.Summary,
                     DateCreated = DateTime.UtcNow,
                     Status = (int) ComplaintStatus.Created,
-                    Type = (int) model.Type
+                    Type = (int) model.Type,
+                    ComplainBy = model.ComplainBy
                 };
                 _repository.Insert(complaint);
                 _unitOfWork.Commit();

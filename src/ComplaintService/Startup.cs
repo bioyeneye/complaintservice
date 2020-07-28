@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using AutoMapper;
 using ComplaintService.Extensions;
 using ComplaintService.Filters;
@@ -26,6 +27,7 @@ namespace ComplaintService
             services.AddControllers();
 
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+            //JwtSecurityTokenHandler.DefaultInboundClaimTypeMap[JwtRegisteredClaimNames.Sub] = ClaimTypes.Upn;
             IdentityModelEventSource.ShowPII = true;
             services.AddControllers(options => { options.Filters.Add(typeof(ValidateModelStateActionFilter)); });
 
@@ -54,11 +56,8 @@ namespace ComplaintService
             app.UseSwagger();
             app.UseSwaggerUI(c => { c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1"); });
 
-
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
             app.UseWelcomePage();
         }
     }
 }
-
-//dotnet ef migrations add "initial migration" -c ComplaintDbContext -s ComplaintService -p ComplaintService.DataAccess  -o Migrations

@@ -50,18 +50,8 @@ namespace ComplaintService.Extensions
             }).AddJwtBearer(cfg =>
             {
                 cfg.RequireHttpsMetadata = false;
-                cfg.SaveToken = true;
                 cfg.Audience = microserviceSetting.ApiName;
                 cfg.Authority = microserviceSetting.Authority;
-
-                // cfg.TokenValidationParameters = new TokenValidationParameters
-                // {
-                //     ValidateIssuer = true,
-                //     ValidateAudience = true,
-                //     ValidIssuer = microserviceSetting.Authority,
-                //     ValidAudience = microserviceSetting.ApiName
-                // };
-
                 cfg.Events = new JwtBearerEvents
                 {
                     OnAuthenticationFailed = context =>
